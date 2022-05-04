@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from transacoes.views import index, tp_contas, tp_conta_new, criar_tp_conta, deletar_tp_conta, tp_transacoes, \
-    tp_transacao_new, criar_tp_transacao, deletar_tp_transacao
+    tp_transacao_new, criar_tp_transacao, deletar_tp_transacao, pessoas, pessoa_v, pessoa_new, criar_pessoa, \
+    deletar_pessoa
 
 
 urlpatterns = [
     path('', index, name='index'),
+    path('pessoas/', pessoas, name='pessoas'),
+    path('pessoa-v/<str:idpessoa>', pessoa_v, name='pessoa_v'),
+    path('pessoa-new/', pessoa_new, name='pessoa_new'),
+    path('criar-pessoa/', criar_pessoa, name='criar_pessoa'),
+    path('deletar-pessoa/<str:idpessoa>', deletar_pessoa, name='deletar_pessoa'),
     path('tipo-contas/', tp_contas, name='tipo_contas'),
     path('tipo-conta-new/', tp_conta_new, name='tipo_conta_new'),
     path('criar-tp-conta/', criar_tp_conta, name='criar_tp_conta'),

@@ -7,6 +7,46 @@ def index(request):
     return render(request, 'transacoes/index.html', {'user': None})
 
 
+def pessoas(request):
+    url_pessoas = os.getenv('URL_API') + 'pessoas'
+    response = requests.get(url_pessoas)
+    pessoas = response.json()
+    return render(request, 'transacoes/pessoas.html', {'pessoas': pessoas, 'status_pessoas': response.status_code})
+
+
+def pessoa_v(request, idpessoa=None):
+    url_pessoa = os.getenv('URL_API') + 'pessoas/id/' + idpessoa
+    response_pessoa = requests.get(url_pessoa)
+    pessoa = response_pessoa.json()
+    return render(request, 'transacoes/pessoa_v.html', {'pessoa': pessoa})
+
+
+def pessoa_new(request):
+    return render(request, 'transacoes/pessoa_new.html')
+
+
+def criar_pessoa(request):
+    url_criar_pessoa = os.getenv('URL_API') + 'pessoas'
+
+    pessoa = {
+        'nome': request.POST.get('nome'),
+        'cpf': request.POST.get('cpf'),
+        'datanascimento': request.POST.get('datanascimento'),
+        'username': request.POST.get('username'),
+        'email': request.POST.get('email'),
+        'password': request.POST.get('password')
+    }
+    response = requests.post(url_criar_pessoa, json=pessoa)
+    return redirect('pessoas')
+
+
+def deletar_pessoa(request, idpessoa=None):
+    url_pessoa = os.getenv('URL_API') + 'pessoas/id/' + idpessoa
+
+    response_pessoa = requests.delete(url_pessoa)
+    return redirect('pessoas')
+
+
 def tp_contas(request):
     url_tp_contas = os.getenv('URL_API') + 'tipo-contas'
     response = requests.get(url_tp_contas)

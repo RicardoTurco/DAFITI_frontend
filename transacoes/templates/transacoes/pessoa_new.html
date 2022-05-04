@@ -1,0 +1,53 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Novo Cliente :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">NOVO CLIENTE</h1>
+    <br><br>
+
+    <form id="nova_pessoa" method="POST" action="{% url 'criar_pessoa' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="nome">Cliente</label>
+            <input type="text" name="nome" class="form-control-plaintext" size=80>
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" class="form-control-plaintext" size=25 placeholder="Digite somente números">
+        </div>
+
+        <div class="form-group">
+            <label for="datanascimento">Dt. de Nascto.</label>
+            <input type="text" name="datanascimento" class="form-control-plaintext" size=15 placeholder="dd/mm/yyyy">
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" class="form-control-plaintext" size=25>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" name="email" class="form-control-plaintext" size=30>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control-plaintext" size=30>
+        </div>
+
+        <br><br>
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'pessoas' %}"><< Return to CLIENTES</a>
+            <button type="submit" class="btn btn-danger">CONFIRMAR</button>
+        <div>
+        <br>
+
+    </form>
+
+{% endblock %}
