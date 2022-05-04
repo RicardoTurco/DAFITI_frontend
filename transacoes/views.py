@@ -75,6 +75,72 @@ def deletar_tp_conta(request, idtipoconta=None):
     return redirect('tipo_contas')
 
 
+def contas(request):
+    url_api = os.getenv('URL_API') + 'contas'
+    response = requests.get(url_api)
+    contas = response.json()
+    return render(request, 'transacoes/contas.html', {'contas': contas, 'status_contas': response.status_code})
+
+
+def conta_v(request, idconta=None):
+    url_conta = os.getenv('URL_API') + 'contas/id/' + idconta
+    url_transacoes_conta = os.getenv('URL_API') + 'transacoes/conta/' + idconta
+
+    response_conta = requests.get(url_conta)
+    response_transacoes_conta = requests.get(url_transacoes_conta)
+
+    conta = response_conta.json()
+    transacoes = response_transacoes_conta.json()
+    return render(request, 'transacoes/conta_v.html', {'conta': conta, 'transacoes': transacoes, 'status_transacoes': response_transacoes_conta.status_code})
+
+
+def conta_new(request):
+    url_pessoas = os.getenv('URL_API') + 'pessoas'
+    url_tp_contas = os.getenv('URL_API') + 'tipo-contas'
+
+    response_pessoas = requests.get(url_pessoas)
+    response_tp_contas = requests.get(url_tp_contas)
+
+    pessoas = response_pessoas.json()
+    tp_contas = response_tp_contas.json()
+    return render(request, 'transacoes/conta_new.html', {'pessoas': pessoas, 'tp_contas': tp_contas})
+
+
+def criar_conta(request):
+    url_criar_conta = os.getenv('URL_API') + 'contas'
+
+    conta = {
+        'idpessoa': request.POST.get('idpessoa'),
+        'limitesaquediario': float(request.POST.get('limitesaquediario')),
+        'idtipoconta': request.POST.get('idtipoconta')
+    }
+    response = requests.post(url_criar_conta, json=conta)
+    return redirect('contas')
+
+
+def inativar_conta(request, idconta=None):
+    url_conta = os.getenv('URL_API') + 'contas/id/' + idconta + '/inactivate'
+
+    response = requests.patch(url_conta)
+    return redirect('conta_v', idconta)
+
+
+def ativar_conta(request, idconta=None):
+    url_conta = os.getenv('URL_API') + 'contas/id/' + idconta + '/activate'
+
+    response = requests.patch(url_conta)
+    return redirect('conta_v', idconta)
+
+
+def deletar_conta(request, idconta=None):
+    url_transacoes_conta = os.getenv('URL_API') + 'transacoes/conta/' + idconta
+    url_conta = os.getenv('URL_API') + 'contas/id/' + idconta
+
+    response_transacoes = requests.delete(url_transacoes_conta)
+    response_conta = requests.delete(url_conta)
+    return redirect('contas')
+
+
 def tp_transacoes(request):
     url_tp_transacoes = os.getenv('URL_API') + 'tipo-transacoes'
     response = requests.get(url_tp_transacoes)
@@ -102,3 +168,34 @@ def deletar_tp_transacao(request, idtipotransacao=None):
 
     response_tp_transacao = requests.delete(url_tp_transacao)
     return redirect('tipo_transacoes')
+
+
+def transacao_new(request, idconta=None):
+    url_conta = os.getenv('URL_API') + 'contas/id/' + idconta
+    url_tp_transacoes = os.getenv('URL_API') + 'tipo-transacoes'
+
+    response_conta = requests.get(url_conta)
+    response_tp_transacoes = requests.get(url_tp_transacoes)
+
+    conta = response_conta.json()
+    tp_transacoes = response_tp_transacoes.json()
+    return render(request, 'transacoes/transacao.html', {'conta': conta, 'tipo_transacoes': tp_transacoes})
+
+
+def confirm_transacao(request):
+    url_transacao = os.getenv('URL_API') + 'transacoes'
+
+    transacao = {
+        'idconta': request.POST.get('idconta'),
+        'idtipotransacao': request.POST.get('idtipotransacao'),
+        'valor': float(request.POST.get('valor'))
+    }
+    response = requests.post(url_transacao, json=transacao)
+    return redirect('conta_v', request.POST.get('idconta'))
+
+
+def delete_transacao(request, idconta=None, idtransacao=None):
+    url_transacao = os.getenv('URL_API') + 'transacoes/id/' + idtransacao
+
+    response = requests.delete(url_transacao)
+    return redirect('conta_v', idconta)

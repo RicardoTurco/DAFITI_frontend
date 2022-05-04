@@ -1,0 +1,50 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Nova Conta :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">NOVA CONTA</h1>
+    <br><br>
+
+    <form id="nova_conta" method="POST" action="{% url 'criar_conta' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="cliente">Cliente</label>
+
+            <select id="pessoa" name="idpessoa">
+                <option value="None"></option>
+                {% for pessoa in pessoas %}
+                  <option value="{{ pessoa.id }}">{{ pessoa.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="tipoconta">Tipo de Conta</label>
+
+            <select id="tipo_conta" name="idtipoconta">
+                <option value="None"></option>
+                {% for tp_conta in tp_contas %}
+                  <option value="{{ tp_conta.id }}">{{ tp_conta.tipoconta }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="limitesaquediario">Limite para saque diário</label>
+            <input type="text" name="limitesaquediario" onkeyup="maskIt(this,event,'###.###.###,##',true,{pre:'R$'})" placeholder="0.00" />
+        </div>
+
+        <br><br>
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'contas' %}"><< Return to CONTAS</a>
+            <button type="submit" class="btn btn-danger">CONFIRMAR</button>
+        <div>
+        <br>
+
+    </form>
+
+{% endblock %}
