@@ -1,0 +1,37 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Tipo Transações :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">TIPOS DE TRANSAÇÕES</h1>
+
+    <br>
+    <a class="btn btn-primary" href="{% url 'tipo_transacao_new' %}">NOVO TIPO TRANSAÇÃO</a>
+    <br><br>
+
+    {% if status_tp_transacoes == 200 %}
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Tipo de Transação</th><th>Operação (D/C)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for tp_transacao in tp_transacoes %}
+                    <tr>
+                        <td>{{ tp_transacao.tipotransacao }}</td>
+                        <td>{{ tp_transacao.operacao }}</td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'deletar_tp_transacao' tp_transacao.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    {% endif %}
+
+{% endblock %}
