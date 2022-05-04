@@ -1,0 +1,28 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Novo Tipo Conta :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">NOVO TIPO DE CONTA</h1>
+    <br><br>
+
+    <form id="novo_tp_conta" method="POST" action="{% url 'criar_tp_conta' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="tipoconta">Tipo de Conta</label>
+            <input type="text" name="tipoconta" class="form-control-plaintext" size=80>
+        </div>
+
+        <br><br>
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'tipo_contas' %}"><< Return to TIPO DE CONTAS</a>
+            <button type="submit" class="btn btn-danger">CONFIRMAR</button>
+        <div>
+        <br>
+
+    </form>
+
+{% endblock %}

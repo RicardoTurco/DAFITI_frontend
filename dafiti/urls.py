@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from transacoes.views import index
+from transacoes.views import index, tp_contas, tp_conta_new, criar_tp_conta, deletar_tp_conta
 
 
 urlpatterns = [
     path('', index, name='index'),
+    path('tipo-contas/', tp_contas, name='tipo_contas'),
+    path('tipo-conta-new/', tp_conta_new, name='tipo_conta_new'),
+    path('criar-tp-conta/', criar_tp_conta, name='criar_tp_conta'),
+    path('deletar-tp-conta/<str:idtipoconta>', deletar_tp_conta, name='deletar_tp_conta'),
     path('admin/', admin.site.urls),
 ]
