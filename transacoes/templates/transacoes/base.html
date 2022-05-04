@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'transacoes/css/bootstrap.min.css' %}">
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	</head>
+
+	<body>
+
+		<div class="container">
+
+			<div class="header clearfix">
+
+				<br><br>
+
+				<nav>
+					<ul class="nav nav-pills pull-right">
+						<li><a href="{% url 'index' %}">Index</a></li>
+
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">CONTAS<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+							  <li><a href="">Detalhes</a></li>
+							  <li><a href="">Tipo de Contas</a></li>
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">MOVIMENTAÇÃO<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+							  <li><a href="">Tipo de Transações</a></li>
+							</ul>
+						</li>
+
+						<li><a href="">CLIENTES</a> </li>
+					</ul>
+				</nav>
+
+				<h3 class="text-muted">DAFITI</h3>
+			</div>
+
+			{% block content %}
+			{% endblock %}
+
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="{% static 'transacoes/js/bootstrap.min.js' %}"></script>
+
+	</body>
+
+</html>
