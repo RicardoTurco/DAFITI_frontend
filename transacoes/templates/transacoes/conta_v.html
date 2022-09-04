@@ -1,0 +1,93 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Conta - Detalhes :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">DETALHES DA CONTA</h1>
+    <br><br>
+
+    <form id="detalhes_conta" method="POST" action="#">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="tipoconta">Tipo Conta</label>
+            <input type="hidden" name="idconta" readonly value="{{ conta.id }}">
+            <input type="text" name="tipoconta" readonly class="form-control-plaintext" value="{{ conta.tipoconta }}">
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Cliente</label>
+            <input type="text" name="nome" readonly class="form-control-plaintext" value="{{ conta.nome }}" size=100>
+        </div>
+
+        <div class="form-group">
+            <label for="saldo">Saldo</label>
+            <input type="text" name="saldo" readonly class="form-control-plaintext" value="{{ conta.saldo }}" size=20>
+        </div>
+
+        <div class="form-group">
+            <label for="limitesaquediario">Limite Saque Diário</label>
+            <input type="text" name="limitesaquediario" readonly class="form-control-plaintext" value="{{ conta.limitesaquediario }}" size=20>
+        </div>
+
+        <div class="form-group">
+            <label for="datacriacao">Dt. abertura da conta</label>
+            <input type="text" name="datacriacao" readonly class="form-control-plaintext" value="{{ conta.datacriacao }}" size=15>
+        </div>
+
+        <div class="form-group">
+            <label for="flagativo">Ativa / Inativa</label>
+            <input type="text" name="flagativo" readonly class="form-control-plaintext" value="{{ conta.flagativo }}" size=5>
+
+            {% if conta.flagativo %}
+                <a class="btn btn-danger" href="{% url 'inativar_conta' conta.id %}">Inativar CONTA</a>
+            {% else %}
+                <a class="btn btn-primary" href="{% url 'ativar_conta' conta.id %}">Ativar CONTA</a>
+            {% endif %}
+        </div>
+
+        <br>
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'contas' %}"><< Return to CONTAS</a>
+
+            {% if conta.flagativo %}
+                <a class="btn btn-danger" href="{% url 'transacao_new' conta.id %}">Nova Transação</a>
+            {% endif %}
+        <div>
+        <br>
+
+        {% if status_transacoes == 200 %}
+            <h3 align="center">..: Movimentação da Conta :..</h3>
+            <hr>
+
+            <div class="form-group">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>Data</th><th>Tipo Transação</th><th>Valor</th><th>C / D</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for transacao in transacoes %}
+                            <tr>
+                                <td>{{ transacao.datatransacao }}</td>
+                                <td>{{ transacao.tipotransacao }}</td>
+                                <td>{{ transacao.valor }}</td>
+                                <td>{{ transacao.operacao }}</td>
+                                <td>
+                                {% if conta.flagativo %}
+                                    <a class="btn btn-danger" href="{% url 'delete_transacao' conta.id transacao.id %}">Delete</a>
+                                {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </form>
+
+{% endblock %}

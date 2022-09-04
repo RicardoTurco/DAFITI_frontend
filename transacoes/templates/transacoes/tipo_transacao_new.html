@@ -1,0 +1,38 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Novo Tipo Transacao :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">NOVO TIPO DE TRANSAÇÃO</h1>
+    <br><br>
+
+    <form id="novo_tp_transacao" method="POST" action="{% url 'criar_tp_transacao' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="tipotransacao">Tipo de Transação</label>
+            <input type="text" name="tipotransacao" class="form-control-plaintext" size=80>
+        </div>
+
+        <div class="form-group">
+            <label for="operacao">Operação</label>
+
+            <select id="operacao" name="operacao">
+                <option value="None"></option>
+                <option value="D">D</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+        <br><br>
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'tipo_transacoes' %}"><< Return to TIPO DE TRANSAÇÕES</a>
+            <button type="submit" class="btn btn-danger">CONFIRMAR</button>
+        <div>
+        <br>
+
+    </form>
+
+{% endblock %}

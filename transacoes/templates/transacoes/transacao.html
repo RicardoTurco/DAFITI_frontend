@@ -1,0 +1,61 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Nova Transação :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">CONTA: Nova Transação</h1>
+
+    <br><br>
+
+    <form id="detalhes_conta" method="POST" action="{% url 'confirm_transacao' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="tipoconta">Tipo Conta</label>
+            <input type="hidden" name="idconta" readonly value="{{ conta.id }}">
+            <input type="text" name="tipoconta" readonly class="form-control-plaintext" value="{{ conta.tipoconta }}">
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Cliente</label>
+            <input type="text" name="nome" readonly class="form-control-plaintext" value="{{ conta.nome }}" size=100>
+        </div>
+
+        <div class="form-group">
+            <label for="saldo">Saldo</label>
+            <input type="text" name="saldo" readonly class="form-control-plaintext" value="{{ conta.saldo }}" size=20>
+        </div>
+
+        <div class="form-group">
+            <label for="limitesaquediario">Limite Saque Diário</label>
+            <input type="text" name="limitesaquediario" readonly class="form-control-plaintext" value="{{ conta.limitesaquediario }}" size=20>
+        </div>
+
+        <div class="form-group">
+            <label for="tipotransacao">Tipo de Transação (D/C)</label>
+
+            <select id="tipo_transacao" name="idtipotransacao">
+                <option value="None"></option>
+                {% for tipo_transacao in tipo_transacoes %}
+                  <option value="{{ tipo_transacao.id }}">{{ tipo_transacao.tipotransacao }} - {{ tipo_transacao.operacao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="valor">Valor</label>
+            <input type="text" name="valor" onkeyup="maskIt(this,event,'###.###.###,##',true,{pre:'R$'})" placeholder="0.00" />
+        </div>
+
+        <br>
+
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'conta_v' conta.id %}"><< Return to Detalhes da CONTA</a>
+            <button type="submit" class="btn btn-danger">CONFIRMAR</button>
+        <div>
+
+    </form>
+
+{% endblock %}

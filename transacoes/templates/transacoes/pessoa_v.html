@@ -1,0 +1,46 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Cliente - Detalhes :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">DETALHES DO CLIENTE</h1>
+    <br><br>
+
+    <form id="detalhes_pessoa" method="POST" action="#">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="nome">Cliente</label>
+            <input type="text" name="nome" readonly class="form-control-plaintext" value="{{ pessoa.nome }}" size=80>
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" readonly class="form-control-plaintext" value="{{ pessoa.cpf }}" size=25>
+        </div>
+
+        <div class="form-group">
+            <label for="datanascimento">Dt. de Nascto.</label>
+            <input type="text" name="datanascimento" readonly class="form-control-plaintext" value="{{ pessoa.datanascimento }}" size=15>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" readonly class="form-control-plaintext" value="{{ pessoa.username }}" size=25>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" name="email" readonly class="form-control-plaintext" value="{{ pessoa.email }}" size=30>
+        </div>
+
+        <br>
+        <div class="form-group">
+            <a class="btn btn-primary" href="{% url 'pessoas' %}"><< Return to CLIENTES</a>
+        <div>
+        <br>
+    </form>
+
+{% endblock %}

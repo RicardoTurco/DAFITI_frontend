@@ -1,0 +1,39 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Contas :..{% endblock %}
+
+{% block content %}
+
+    <br>
+    <h1 align="center">CONTAS</h1>
+
+    <br>
+    <a class="btn btn-primary" href="{% url 'conta_new' %}">NOVA CONTA</a>
+    <br><br>
+
+    {% if status_contas == 200 %}
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Tipo Conta</th><th>Cliente</th><th>Ativa / Inativa</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for conta in contas %}
+                    <tr>
+                        <td>{{ conta.tipoconta }}</td>
+                        <td>{{ conta.nome }}</td>
+                        <td>{{ conta.flagativo }}</td>
+                        <td>
+                            <a class="btn btn-info" href="{% url 'conta_v' conta.id %}">Detalhes</a>
+                            <a class="btn btn-danger" href="{% url 'deletar_conta' conta.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    {% endif %}
+
+{% endblock %}

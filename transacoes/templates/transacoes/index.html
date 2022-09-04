@@ -1,0 +1,15 @@
+{% extends 'transacoes/base.html' %}
+
+{% block title %}..: Index :..{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        {% if user %}
+            <h1>Bem vindo à tela inicial de TRANSAÇÕES {{ user }} !!!</h1>
+        {% else %}
+            <h1>Bem vindo à tela inicial de TRANSAÇÕES !!!</h1>
+        {% endif %}
+
+        <br><br><p class="lead">A partir daqui o usuário realizará "movimentações" em uma determinada conta.</p>
+    </div>
+{% endblock %}
